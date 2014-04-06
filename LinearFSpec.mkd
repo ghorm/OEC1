@@ -1,0 +1,33 @@
+LinearF Class
+==============
+
+La classe LineaF représente une équation de droite affine de la forme y=ax+b avec a et b appartenant à R et ne dépendant pas de x ou de la forme x=b pour les droites verticales.
+
+###Attributs
+
+* *float* **m_slope** le cofficient directeur de la droite. Dans le cas d'une droite verticale, m_slope aurait la valeur maximum accepté pour un float par le système (std::numeric_limits<float>::max() ).
+* *float* **m_yinter** l'ordonnée à l'origine de la droite. Dans le cas d'une droite verticale, m_yinter représente la valeur constante de la droite sur l'axe des abssices.
+* *float* **m_lowLimit** la limite la plus petite sur l'axe des abssices. Dans le cas d'une droite verticale, m_lowLimit indique la plus petite limite sur les ordonées.
+* *float* **m_highLimit** la limite haute sur l'axe des abssices. Dans le cas d'une droite verticale, m_lowLimit indique la plus grande limite sur les ordonées.
+* *bool* **m_isVertical**
+
+###Méthodes
+
+* **constructeur** (*float*  **slope**, *float*  **yinter**) création de la droite par son coefficient directeur et son ordonée à l'origine.
+* **constructeur** (*float* **xa**, *float* **xb**, *float* **ya**, *float* **yb**) création de la droite par deux points.
+* **constructeur** (*float* **xa**, *float* **ya**, *float* **slope**) création de la droite par un point et un coefficient directeur.
+* **constructeru** (*float* **xa**, *bool* **vertical**) création d'une droite verticale.
+* **constructeur** () création d'une droite vide
+* **destructeur** ()
+* *void*  **setSlope** (*float* slope) assigne un coefficient directeur
+* *void*  **setYinter** (*float* yinter) assigne une ordonée à l'origine
+* *void*  **setAll** (*float* slope, *float* yinter) assigne un coefficient directeur et une ordonée à l'origine
+* *float*  **getSlope** () *const* récupère le coefficient directeur
+* *float*  **getYinter** () *const* récupère l'ordonée à l'origine
+* *float*  **findy** (*float* x) const //calcul d'un Y pour un X donné
+* *float* **getAngle** () *const* récupère l'angle formé par la droite avec l'horizontale en radian (sens trigo)
+* *float* **getRAngle** (_*LinearF_ **base**) *const* récupère l'angle formé par la droite et une autre droite (la base), renvoi l'angle le plus petit des deux possibles.
+* *void* **parallelOnPoint** (*float* **xa**, *float* **ya**, *bool* **direction**) création d'une droite verticale (direction==1) ou horizontale (direction==0) passant par un point.
+* *void* **perpendicularOnPoint** (*float* **xa**, *float* **ya**, _*LinearF*, *bool* **direction**) création d'une droite perpendiculaire (direction==1) ou parallèle (direction==0) à une autre droite en passant par un point.
+* *void* **parallelWithDistance** (_*LinearF_ **base**, *float* **distance**) création d'une droite parralèle à une autre (la base), en spécifiant la distance.
+* *void* **withAngle** (*float* **xa**, *float* **ya**, *float* **alpha**) création d'une droite passant par un point avec un angle par rapport à l'horizontale donné (dans le sens trigo) et en radian.
