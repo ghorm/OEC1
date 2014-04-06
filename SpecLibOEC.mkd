@@ -1,0 +1,153 @@
+Specification de la librairie de calcul de neige
+======================================
+
+Tous les angles sont en degrés
+
+Toutes les longueurs sont en mètres
+
+Les charges de neiges sont exprimées en kN/m² en projection horizontal
+
+***********************************
+
+La classe SnowRoof (virtual)
+---------------
+
+La classe SnowRoof représente un toit avec toutes ses charges de neiges
+
+###Attributs
+* *string* **m_zdn** La zone de neige du projet * *int* **m_alt** l'altitude du projet
+* *float*  **m_sk200** La charge caractéristique de neige pour une alt < 200m
+* *float*  **m_sad200** la charge de neige exceptionelle pour une alt < 200m
+* *float*  **m_sk** la charge de neige caractéristique à l'altitude du projet
+* *float* **m_sad** la charge de neige exceptionelle à l'altitude du projet
+* *Vector <string>* **calculations** un tableau de string enregistrant les calculs au fur et à mesure
+
+*************************************
+
+La classe SimpleSnowRoof
+--------------------------
+
+Elle hérite de la classe SnowRoof et représente un toit à un seul pan unique
+
+###Attributs
+
+* *float* **m_alpha** La pente du toit
+* *SnowLoad* **m_snowLoad** la charge de neige sur le toit
+
+###Méthodes
+
+* **constructeur** (*float* **alpha**)
+* **constructeur** ()
+* **destructeur** ()
+* *void* **setSlope** (*float* **alpha**) //assigne une pente en degré au pan de toit
+* *float* **getSlope** () const //récupère la pente en degré du pan de toit
+* *void* **compute** () //calcul la charge de neige
+* *float* **getMaxLoad** () const //renvoi la charge de neige maximal à prendre en compte
+* *float* **getMaxExcLoad** () const //renvoi la charge de neige maximal à prendre en compte en situation exceptionelle
+* _*SnowLoad_ **getLoad** () const //renvoi un pointeur vers l'objet SnowLoad, la charge de neige
+
+************************************
+
+La classe DoubleSnowRoof
+--------------------------
+
+Elle hérite de la classe SnowRoof et représente un toit à deux pans
+
+###Attributs
+
+* *float* **m_alpha** pente du pan de toit A
+* *float* **m_beta** pente du pan de toit B
+* *SnowLoad* **m_AsnowLoad** La charge de neige sur A
+* *SnowLoad* **m_BsnowLoad** La charge de neige sur B
+
+*********************************
+
+La classe LinearF
+-----------------
+
+La classe LineaF représente une équation de droite affine de la forme y=ax+b avec a et b appartenant à R et ne dépendant pas de x.
+
+###Attributs
+
+* *float* **m_slope** le cofficient directeur de la droite
+* *float* **m_yinter** l'ordonnée à l'origine de la droite
+
+###Méthodes
+
+* **constructeur** (*float*  **slope**, *float*  **yinter**)
+* **constructeur** ()
+* **destructeur** ()
+* *void*  **setSlope** (*float* slope)
+* *void*  **setYinter** (*float* yinter)
+* *void*  **setAll** (*float* slope, *float* yinter)
+* *float*  **getSlope** () const
+* *float*  **getYinter** () const
+* *float*  **findy** (*float* x) const //calcul d'un Y pour un X donné
+
+**************************
+
+La classe SnowLoad
+----------------------
+
+La classe SnowLoad représente une charge de neige et tout son calcul.
+
+###Attributs
+
+* *float* **m_Sk** La charge de neige caractéristique
+* *float* **m_Sad** La charge de neige en situation accidentelle
+* *LinearF*  **m_mu0** le coefficient de sans accumulation
+* *LinearF*  **m_muAcc** le coefficient de avec accumulation
+* *float*  **m_ce** le coefficient d'exposition Ce
+* *float*  **m_ct** le cefficient thermique Ct
+* *float* **m_S1** le coefficient pour faible pente
+* *Vector <string>* **calculations** un tableau de string enregistrant les calculs au fur et à mesure
+* *float* **m_start** point de départ de la charge de neige (si NULL pas de point de départ)
+* *float* **m_arrival** point de fin de la charge de neige (si NULL pas de point d'arrivé)
+
+###Méthodes
+
+* **constructeur** (*float* **Sk**, *float* **Sad**, *LinearF* **mu0**, *LinearF* **muAcc**, *float* **Ce**, *float* **Ct**, *float* **S1**, *float* **startP**, *float* **arrival**)
+* **constructeur** ()
+* *float* **getMaxLoad** () const //renvoi la charge maximum de la neige
+* *float* **getMaxExcLoad** () const //renvoi la charge maximum de la neige en situation exceptionelle
+* *float* **getLoadOn** (*float* **x**) const //renvoi la charge de neige en un point precis (compris entre m_start et m_arrival)
+* *LinearF* **getLoad0** () const // renvoi un objet LinearF représantant l'équation de neige en situation normale
+* *LinearF* **getExcLoad0** () const // renvoi un LinearF représantant l'équation de neige en situation exceptionelle
+* *LinearF* **getLoadAcc** () const // renvoi un objet LinearF représantant l'équation de neige en situation normale **avec** accumulation
+* *LinearF* **getExcLoadAcc** () const // renvoi un objet LinearF représantant l'équation de neige en situation exceptionelle **avec** accumulation
+
+****************************
+
+Les fonctions élémentaires de calculs
+--------------------------------------
+
+###*float* **Sk200** (*string* **zdn**)
+
+Renvoi la valeur de la charge de neige caractéristique à 200m en fonction de la zone de neige
+
+###*float* **Sad200** (*string* **zdn**)
+
+Renvoi la valeur de la charge de neige exceptionelle à 200m en fonction de la zone de neige
+
+###*float* **Sk** (*string* **zdn**, *int* **alt**, *float* **S200**)
+
+Renvoi la valeur Sk d'une charge de neige à partir d' une charge à 200m, de la zone de neige et de l'altitude (avec les équation DeltaS1 et DeltaS2)
+
+###*float* **Sad** (*string* **zdn**, *int* **alt**)
+
+###*LinearF* **simpleRoofMu** (*float* **alpha**)
+
+Renvoi le coefficient de forme Mu d'un pan de toit simple (valable avec et sans accumulation)
+
+
+###*LinearF* **doubleRoofMuAcc** (*float* **alpha**)
+
+Renvoi le coefficient de forme Mu avec accumulation
+
+###*vector<LinearF>* **MultipleRoofAcc** (*float* **alpha**,*float* **beta**,*float* **a**,*float* **b**)
+
+Renvoi l'équation de Mu de la charge de neige avec accumulation sur les deux pans de toit 
+
+alpha représente la pente du premier pan de toit, beta la pente du deuxième pan de toit
+
+a et b représente la longueur au sol des pans de toit
