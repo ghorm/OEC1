@@ -15,7 +15,8 @@ La classe SnowRoof (virtual)
 La classe SnowRoof représente un toit avec toutes ses charges de neiges
 
 ###Attributs
-* *string* **m_zdn** La zone de neige du projet * *int* **m_alt** l'altitude du projet
+* *string* **m_zdn** La zone de neige du projet 
+* *int* **m_alt** l'altitude du projet
 * *float*  **m_sk200** La charge caractéristique de neige pour une alt < 200m
 * *float*  **m_sad200** la charge de neige exceptionelle pour une alt < 200m
 * *float*  **m_sk** la charge de neige caractéristique à l'altitude du projet
