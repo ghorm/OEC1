@@ -32,7 +32,7 @@ La classe LineaF représente une équation de droite affine de la forme y=ax+b a
 * *void* **perpendicularOnPoint** (*float* **xa**, *float* **ya**, _LinearF*_ **base**) création d'une droite perpendiculaire à une autre droite en passant par un point.
 * *void* **parallelOnPoint** (*float* **xa**, *float* **ya**, _LinearF*_ **base**)création d'une droite parallèle à une autre droite en passant par un point.
 * *void* **parallelWithDistance** (_LinearF*_ **base**, *float* **distance**) création d'une droite parralèle à une autre (la base), en spécifiant la distance.
-* *void* **withAngle** (*float* **xa**, *float* **ya**, *float* **alpha**) création d'une droite passant par un point avec un angle par rapport à l'horizontale donné (dans le sens trigo) et en radian.
+* *void* **withAngleonPoint** (*float* **xa**, *float* **ya**, *float* **alpha**) création d'une droite passant par un point avec un angle par rapport à l'horizontale donné (dans le sens trigo) et en radian.
 * *bool* **getIsVertical** () *const* Renvoi *true* si la droite est verticale (*m_isVertical*==*true*)
 * *bool* **getIsLimited** () *const* Renvoi *true* si la droite est borné par au moins une limite (*m_isLimited*==*true*)
 * *float* **getCloserDistanceFromPoint** (*float* **xa**, *float* **ya**)const renvoi la distance minimale entre la droite et le point a
