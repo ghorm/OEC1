@@ -129,9 +129,9 @@ Renvoi la valeur de la charge de neige caractéristique à 200m en fonction de l
 
 Renvoi la valeur de la charge de neige exceptionelle à 200m en fonction de la zone de neige
 
-###*float* **Sk** (*string* **zdn**, *int* **alt**, *float* **S200**)
+###*float* **Sk** (*string* **zdn**, *int* **alt**)
 
-Renvoi la valeur Sk d'une charge de neige à partir d' une charge à 200m, de la zone de neige et de l'altitude (avec les équation DeltaS1 et DeltaS2)
+Renvoi la valeur Sk d'une charge de neige à partir de la zone de neige et de l'altitude (avec les équation DeltaS1 et DeltaS2)
 
 ###*float* **Sad** (*string* **zdn**, *int* **alt**)
 
