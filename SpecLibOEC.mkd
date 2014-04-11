@@ -106,7 +106,7 @@ La classe SnowLoad représente une charge de neige et tout son calcul.
 
 ###Méthodes
 
-* **constructeur** (*float* **Sk**, *float* **Sad**, *LinearF* **mu0**, *LinearF* **muAcc**, *float* **Ce**, *float* **Ct**, *float* **S1**, *float* **startP**, *float* **arrival**)
+* **constructeur** (*float* **Sk**, *float* **Sad**, *LinearF* **mu0**, *LinearF* **muAcc**, *float* **Ce**, *float* **Ct**, *float* **S1**, *float* **start**, *float* **arrival**)
 * **constructeur** ()
 * *float* **getMaxLoad** () const //renvoi la charge maximum de la neige
 * *float* **getMaxExcLoad** () const //renvoi la charge maximum de la neige en situation exceptionelle
