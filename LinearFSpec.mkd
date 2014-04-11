@@ -36,3 +36,6 @@ La classe LineaF représente une équation de droite affine de la forme y=ax+b a
 * *bool* **getIsVertical** () *const* Renvoi *true* si la droite est verticale (*m_isVertical*==*true*)
 * *bool* **getIsLimited** () *const* Renvoi *true* si la droite est borné par au moins une limite (*m_isLimited*==*true*)
 * *float* **getCloserDistanceFromPoint** (*float* **xa**, *float* **ya**)const renvoi la distance minimale entre la droite et le point a
+* *void* **setMinLimit** (*float* **x**) créer une limite minimale sur x
+* *void* **setMaxLimit** (*float* **x**) créer une limite maximale sur x
+* *void* **setBothLimit** (*float* **xmin**,*float* **xmax**) créer une limite minimale et maximale sur x
