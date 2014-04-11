@@ -12,7 +12,7 @@ Les charges de neiges sont exprimées en kN/m² en projection horizontal
 La classe SnowRoof (virtual)
 ---------------
 
-La classe SnowRoof représente un toit avec toutes ses charges de neiges
+La classe SnowRoof représente une toiture complète, potentiellement composé de plusieurs pans de toits avec toutes ses charges de neiges
 
 ###Attributs
 * *string* **m_zdn** La zone de neige du projet 
@@ -27,7 +27,7 @@ La classe SnowRoof représente un toit avec toutes ses charges de neiges
 La classe SimpleSnowRoof
 --------------------------
 
-Elle hérite de la classe SnowRoof et représente un toit à un seul pan unique
+La classe SimpleSnowRoof et représente un toit à un seul pan unique
 
 ###Attributs
 
@@ -51,7 +51,7 @@ Elle hérite de la classe SnowRoof et représente un toit à un seul pan unique
 La classe DoubleSnowRoof
 --------------------------
 
-Elle hérite de la classe SnowRoof et représente un toit à deux pans
+La classe DoubleSnowRoof représente un toit à deux pans
 
 ###Attributs
 
