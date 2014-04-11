@@ -11,8 +11,8 @@ LinearF::LinearF(float xa, float xb, float ya, float yb)
     m_yinter=0;
     m_isVertical=false;
     m_isLimited=false;
-    m_lowLimit=0;
-    m_highLimit=0;
+    m_lowLimit=std::numeric_limits<float>::max();
+    m_highLimit=std::numeric_limits<float>::max();
     if(xb>xa)
     {
         m_slope=(yb-ya)/(xb-xa);
@@ -38,8 +38,8 @@ LinearF::LinearF(float xa, float ya, float slope)
     m_yinter=0;
     m_isVertical=false;
     m_isLimited=false;
-    m_lowLimit=0;
-    m_highLimit=0;
+    m_lowLimit=std::numeric_limits<float>::max();;
+    m_highLimit=std::numeric_limits<float>::max();;
     if(slope<999999)
     {
         m_slope=slope;
@@ -60,8 +60,8 @@ LinearF::LinearF(float xa, bool vertical)
     m_yinter=xa;
     m_isVertical=true;
     m_isLimited=false;
-    m_lowLimit=0;
-    m_highLimit=0;
+    m_lowLimit=std::numeric_limits<float>::max();;
+    m_highLimit=std::numeric_limits<float>::max();;
 }
 
 LinearF::LinearF()
@@ -70,8 +70,8 @@ LinearF::LinearF()
     m_yinter=0;
     m_isVertical=false;
     m_isLimited=false;
-    m_lowLimit=0;
-    m_highLimit=0;
+    m_lowLimit=std::numeric_limits<float>::max();;
+    m_highLimit=std::numeric_limits<float>::max();;
 }
 
 LinearF::~LinearF()
@@ -126,11 +126,27 @@ float LinearF::getYinter() const
     return m_yinter;
 }
 
-float LinearF::findy(float x)
+float LinearF::findy(float x) const
 {
     if (!m_isVertical)
     {
         return (x*m_slope) + m_yinter;
+    }
+    else
+    {
+        return m_yinter;
+    }
+}
+
+float LinearF::findx(float y) const
+{
+    if (!m_isVertical && m_slope!=0)
+    {
+        return ((y-m_yinter)/m_slope);
+    }
+    else if(m_isVertical)
+    {
+        return m_yinter;
     }
     else
     {
@@ -171,8 +187,8 @@ float LinearF::getRAngle(LinearF* base) const
 {
     float abase=base->getAngle();
     float athis=this->getAngle();
-    angleA=abase-athis;
-    angleB=(abase+(2*Pi))-athis;
+    float angleA=abase-athis;
+    float angleB=(abase+(2*PI))-athis;
     if(angleA>angleB)
     {
         return angleB;
@@ -240,43 +256,129 @@ void LinearF::parallelOnPoint (float xa, float ya, LinearF* base)
 
 void LinearF::parallelWithDistance (LinearF* base, float distance)
 {
-    if(base->getIsVertical)
+    if(base->getIsVertical())
     {
         m_isVertical=true;
         m_slope=std::numeric_limits<float>::max();
-        m_yinter=base->getYinter + distance;
+        m_yinter=base->getYinter() + distance;
     }
-    else if(base->getSlope==0)
+    else if(base->getSlope()==0)
     {
         m_isVertical=false;
         m_slope=0;
-        m_yinter=base->getYinter + distance;
+        m_yinter=base->getYinter() + distance;
     }
     else
     {
-        float x(0),y(0);
-        slope=(-1)/(base->getSlope());
-        yinter=base->getYinter();
+        m_slope=base->getSlope();
+        m_yinter=base->getYinter()+ (distance/(sin((PI/2)-atan(m_slope))));
+        m_isVertical=false;
     }
-    ////////A FINIR//////////////////
+
 }
 
 void LinearF::withAngleOnPoint (float xa, float ya, float alpha)
 {
-
+    alpha=fmod(alpha,(2*PI));
+    if(alpha==(PI/2))
+    {
+        m_isVertical=true;
+        m_yinter=xa;
+        m_slope=std::numeric_limits<float>::max();
+    }
+    else if(alpha==0)
+    {
+        m_isVertical=false;
+        m_yinter=ya;
+        m_slope=0;
+    }
+    else
+    {
+        m_slope=tan(alpha);
+        m_yinter=ya-(m_slope*xa);
+        m_isVertical=false;
+    }
 }
 
 bool LinearF::getIsVertical () const
 {
-
+    return m_isVertical;
 }
 
 bool LinearF::getIsLimited () const
 {
-
+    return m_isLimited;
 }
 
 float LinearF::getCloserDistanceFromPoint (float xa, float ya) const
 {
+    if(m_isVertical)
+    {
+        return fabs(xa-m_yinter);
+    }
+    else
+    {
+        return fabs((m_slope*xa)-ya+m_yinter)/sqrt(1+(m_slope*m_slope));
+    }
 
+}
+
+void LinearF::setMinLimit(float x)
+{
+    if(!m_isLimited)
+    {
+        m_lowLimit=x;
+        m_isLimited=true;
+    }
+    else
+    {
+        if(x<=m_highLimit)
+        {
+            m_lowLimit=x;
+        }
+        else
+        {
+            m_lowLimit=m_highLimit;
+            m_highLimit=x;
+        }
+    }
+
+}
+
+void LinearF::setMaxLimit(float x)
+{
+    if(!m_isLimited)
+    {
+        m_highLimit=x;
+        m_isLimited=true;
+    }
+    else
+    {
+        if(x>=m_lowLimit)
+        {
+            m_highLimit=x;
+        }
+        else
+        {
+            m_highLimit=m_lowLimit;
+            m_lowLimit=x;
+        }
+    }
+
+}
+
+void LinearF::setBothLimit (float xmin, float xmax)
+{
+    if(xmin<=xmax)
+    {
+        m_lowLimit=xmin;
+        m_highLimit=xmax;
+    }
+
+    else
+    {
+        m_lowLimit=xmax;
+        m_highLimit=xmin;
+    }
+    m_isLimited=true;
 }

@@ -23,7 +23,8 @@ class LinearF
     void setAll (float slope, float yinter);
     float getSlope() const;
     float getYinter() const;
-    float findy(float x);
+    float findy(float x) const;
+    float findx(float y) const;
     float getAngle() const;
     float getRAngle(LinearF* base) const;
     void orthoOnPoint (float xa, float ya, bool direction);
@@ -34,9 +35,11 @@ class LinearF
     bool getIsVertical () const;
     bool getIsLimited () const;
     float getCloserDistanceFromPoint (float xa, float ya) const;
+    void setMinLimit(float x);
+    void setMaxLimit(float x);
+    void setBothLimit (float xmin, float xmax);
 
-
-    private:
+    protected:
 
     float m_slope;
     float m_yinter;
@@ -44,6 +47,11 @@ class LinearF
     float m_highLimit;
     bool m_isVertical;
     bool m_isLimited;
+
+
+    private:
+
+
 };
 
 
